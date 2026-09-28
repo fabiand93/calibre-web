@@ -1117,6 +1117,9 @@ def HandleInitRequest():
                                                                isGreyscale='false'))
         kobo_resources["library_sync"] = calibre_web_url + url_for("kobo.HandleSyncRequest",
                                                                     auth_token=kobo_auth.get_auth_token())
+        kobo_resources["reading_state"] = unquote(calibre_web_url + url_for("kobo.HandleStateRequest",
+                                                                             auth_token=kobo_auth.get_auth_token(),
+                                                                             book_uuid="{Ids}"))
     else:
         kobo_resources["image_host"] = url_for("web.index", _external=True).strip("/")
         kobo_resources["image_url_quality_template"] = unquote(url_for("kobo.HandleCoverImageRequest",
@@ -1137,6 +1140,10 @@ def HandleInitRequest():
         kobo_resources["library_sync"] = url_for("kobo.HandleSyncRequest",
                                                   auth_token=kobo_auth.get_auth_token(),
                                                   _external=True)
+        kobo_resources["reading_state"] = unquote(url_for("kobo.HandleStateRequest",
+                                                            auth_token=kobo_auth.get_auth_token(),
+                                                            book_uuid="{Ids}",
+                                                            _external=True))
 
     response = make_response(jsonify({"Resources": kobo_resources}))
     response.headers["x-kobo-apitoken"] = "e30="
