@@ -1080,7 +1080,7 @@ def HandleInitRequest():
         else:
             host = request.host
         calibre_web_url = "{url_scheme}://{url_base}:{url_port}".format(
-            url_scheme=request.scheme,
+            url_scheme=('https' if request.host.split(':')[0] == 'books.fabiandiaz.me' else request.scheme),
             url_base=host,
             url_port=config.config_external_port
         )
